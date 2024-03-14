@@ -1,0 +1,144 @@
+{
+  "$schema": "https://frontmatter.codes/frontmatter.schema.json",
+  "frontMatter.taxonomy.contentTypes": [
+    {
+      "name": "default",
+      "pageBundle": false,
+      "previewPath": null,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Publishing date",
+          "name": "date",
+          "type": "datetime",
+          "default": "{{now}}",
+          "isPublishDate": true
+        },
+        {
+          "title": "Content preview",
+          "name": "preview",
+          "type": "image"
+        },
+        {
+          "title": "Is in draft",
+          "name": "draft",
+          "type": "draft"
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "tags"
+        },
+        {
+          "title": "Categories",
+          "name": "categories",
+          "type": "categories"
+        }
+      ]
+    }
+  ],
+  "frontMatter.framework.id": "hugo",
+  "frontMatter.content.publicFolder": "static",
+  "frontMatter.preview.host": "http://localhost:1313",
+  "frontMatter.content.pageFolders": [
+    {
+      "title": "content",
+      "path": "[[workspace]]/content"
+    },
+    {
+      "title": "articles",
+      "path": "[[workspace]]/content/articles"
+    }
+  ],
+  "frontMatter.content.snippets": {
+    "Алерт": {
+      "description": "хуялерт",
+      "body": [
+        "{{< alert context=\"success\" icon=\"🗜\" >}}",
+        "{{< /alert >}}"
+      ],
+      "fields": []
+    },
+    "карусель": {
+      "description": "кок карусель",
+      "body": [
+        "{{< cs id=\"1\" >}}СЮДА{{< /cs >}}",
+        "<p></p>"
+      ],
+      "fields": []
+    },
+    "Видео": {
+      "description": "хуидео",
+      "body": "{{< video ratio=\"4x3\" attributes=\"controls preload=none poster=/previews/video4x3.png muted\" mp4-src=\"vid/01.mp4\" >}}",
+      "fields": []
+    },
+    "подпись справа": {
+      "description": "Хуедпись хуява",
+      "body": "<p class = \"bottomline\" >СЮДА</p>",
+      "fields": []
+    },
+    "сноска": {
+      "description": "хуеска",
+      "body": [
+        "контенттут[^1]",
+        "",
+        "[^1]: сноскатут"
+      ],
+      "fields": []
+    },
+    "картинка справа": {
+      "description": "хуй слева",
+      "body": "<img src=\"img/04.JPG\" align=right loading=\"lazy\" width=40% style=\"margin-left:20px; margin-top:5px; margin-bottom:5px;\">",
+      "fields": []
+    },
+    "табы": {
+      "description": "хуябы",
+      "body": [
+        "{{< tabs tabTotal=\"3\" >}}",
+        "{{< tab tabName=\"Tab 1\" >}}",
+        "",
+        "**Tab 1 Content**",
+        "",
+        "{{< /tab >}}",
+        "{{< tab tabName=\"Tab 2\" >}}",
+        "",
+        "**Tab 2 Content**",
+        "",
+        "{{< /tab >}}",
+        "{{< tab tabName=\"Tab 3\">}}",
+        "",
+        "**Tab 3 Content**",
+        "",
+        "{{< /tab >}}",
+        "{{< /tabs >}}"
+      ],
+      "fields": []
+    },
+    "Карусель-папка": {
+      "description": "хуяпка",
+      "body": [
+        "{{< csf id=\"90\" >}}F{{< /csf >}}",
+        "<p></p>"
+      ],
+      "fields": []
+    },
+    "детейлс": {
+      "description": "",
+      "body": [
+        "{{< details \"Почему не каждый день?\" >}}",
+        "",
+        "{{< /details >}}"
+      ],
+      "fields": []
+    }
+  }
+}

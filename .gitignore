@@ -1,0 +1,7 @@
+public
+.netlify
+.hugo_build.lock
+node_modules
+.DS_Store
+themes/.git
+themes/hugo-shortcode-gallery/.git

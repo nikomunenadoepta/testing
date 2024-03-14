@@ -1,0 +1,17 @@
+- id: get-started
+  translation: "Поехали, епт"
+
+- id: on-this-page
+  translation: "Содержание"
+
+- id: search-text
+  translation: "Поиск по сайту..."
+
+- id: 404-title
+  translation: "Такой страницы нет"
+
+- id: 404-text
+  translation: "Похоже, что мы где-то поменяли адрес."
+
+- id: browse
+  translation: "Browse"

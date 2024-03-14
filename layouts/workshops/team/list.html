@@ -1,0 +1,50 @@
+{{ define "main" }}
+	<div class="row flex-xl-nowrap">
+		<div class="col-lg-5 col-xl-4 docs-sidebar{{ if ne .Site.Params.options.navbarSticky true }} docs-sidebar-top{{ end }} d-none d-lg-block">
+			<nav {{ if eq .Site.Params.menu.section.collapsibleSidebar false }}id="sidebar-default" {{ end }}class="docs-links" aria-label="Main navigation">
+			{{ partial "sidebar/workshops-menu.html" . }}
+		</nav>
+	</div>
+	<main class="docs-content col-lg-11 mx-xl-auto">
+		<h1 class="text-left">{{ .Title }}</h1>
+		{{ .Content }}
+		
+	
+		<div class="row row-cols-2 row-cols-md-3 g-3">
+			{{ range where .Pages.ByWeight "Params.leftdate" "eq" nil }}
+				<div class="col">
+					{{ $img := .Resources.GetMatch "**.jpg" }}
+					{{ $img := $img.Fill "450x600" }}
+					{{ if ne .Params.unclickable true }}<a href="{{ .RelPermalink }}">{{ end }}
+						<div class="position-relative"><img src="{{ $img.RelPermalink}}" loading="lazy">
+						<div class="position-absolute bottom-0 start-0  text-white" style="margin-left: 30px; text-shadow: 0 0 3px black">
+							<h1>{{ index (split .Title " ") 0 }}</h1>
+						  </div></div>
+						  {{ if ne .Params.unclickable true }}
+							</a>
+						  {{ end }}
+				</div>
+			{{ end }}
+		</div>
+		<hr>
+		
+		<h2>Работали раньше</h2>
+
+		<div class="row row-cols-2 row-cols-md-3 g-3">
+			{{ range where .Pages.ByWeight "Params.leftdate" "ne" nil }}
+				<div class="col">
+					{{ $img := .Resources.GetMatch "**.jpg" }}
+					{{ $img := $img.Fill "450x600" }}
+					<a href="{{ .RelPermalink }}">
+						<div class="position-relative"><img src="{{ $img.RelPermalink}}" loading="lazy">
+						<div class="position-absolute bottom-0 start-0  text-white" style="margin-left: 30px; text-shadow: 0 0 5px black">
+							<h1>{{ index (split .Title " ") 0 }}</h1>
+						  </div></div>
+					</a>
+				</div>
+			{{ end }}
+		</div>
+
+	</main>
+</div>
+{{ end }}

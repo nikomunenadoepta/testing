@@ -1,0 +1,23 @@
+{{ if or .Prev .Next -}}
+	<div class="docs-navigation d-flex justify-content-between">
+	{{ $pages := where site.RegularPages "Section" .Section -}}
+	{{ with $pages.Prev . -}}
+		<a href="{{ .RelPermalink }}">
+			<div class="card my-2 mr-4">
+				<div class="card-body py-2">
+					&larr; {{ .Title }}
+				</div>
+			</div>
+		</a>
+	{{ end -}}
+	{{ with $pages.Next . -}}
+		<a class="ms-auto" href="{{ .RelPermalink }}">
+			<div class="card my-2 ml-4">
+				<div class="card-body py-2">
+					{{ .Title }} &rarr;
+				</div>
+			</div>
+		</a>
+	{{ end -}}
+	</div>
+{{ end -}}

@@ -1,0 +1,113 @@
+
+{{ define "main" }}
+	<div class="row flex-md-nowrap">
+		<div class="col-md-4 docs-sidebar{{ if ne .Site.Params.options.navbarSticky true }} docs-sidebar-top{{ end }} d-none d-lg-block">
+			<nav {{ if eq .Site.Params.menu.section.collapsibleSidebar false }}id="sidebar-default" {{ end }}class="docs-links" aria-label="Main navigation">
+				{{ partial "sidebar/articles-menu.html" . }}
+			</nav>
+		</div>
+		{{ if ne .Params.toc false -}}
+		<nav class="docs-toc{{ if ne .Site.Params.options.navbarSticky true }} docs-toc-top{{ end }} d-none d-xl-block col-xl-3" aria-label="Secondary navigation">
+			{{ partial "sidebar/docs-toc.html" . }}
+		</nav>
+		{{ end -}}
+		{{ if .Params.toc -}}
+		<main class="docs-content col-lg-12 col-xl{{ if eq .Site.Params.options.fullWidth false }}-9{{ end }} mx-lg-3 mx-xl-4 mx-xxl-5">
+		{{ else -}}
+		<main class="docs-content col-lg-12 col-xl-9 mx-lg-3 mx-xl-5">
+		{{ end -}}
+			{{ if .Site.Params.options.breadCrumb -}}
+				<!-- https://discourse.gohugo.io/t/breadcrumb-navigation-for-highly-nested-content/27359/6 -->
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						{{ partial "main/breadcrumb" . -}}
+						<li class="breadcrumb-item active" aria-current="page">{{ .Title }}</li>
+					</ol>
+				</nav>
+			{{ end }}
+
+			<div class="max700px">
+
+			<h1>{{ .Title }}</h1>
+
+			{{ with .Params.Sponsors}}
+				<div class="alert-success d-flex mb-3" role="alert">
+					<div class="flex-shrink-1 alert-icon"></div>
+						<div class="w-100" style="font-size: 80%">
+							<b>{{delimit . ", " }}</b> и <a href="/about/">другие</a> помогли выходу этой статьи.
+					</div>
+				</div>
+			{{ end }}
+
+			{{ $currentPage := . -}}
+
+			{{ with .Params.series }}
+			<div class="alert pb-0">
+					<b>Серия "<a href="{{ "/articles/series/" | relLangURL }}{{ . }}" target="_blank">{{ . | strings.FirstUpper }}</a>":</b>
+					
+					<ol>
+						{{ range $.Site.Taxonomies.series.Get . | collections.Reverse }}
+
+							{{ $active := eq $currentPage.RelPermalink .Page.RelPermalink  }}
+
+							{{ $temp := split .Page.Title ": " | last 1 }}
+							{{ $temp := index $temp 0 }}
+
+							{{ if not $active }}
+								<li><a href="{{ .Page.RelPermalink }}">{{ $temp | strings.FirstUpper }}</a></li>
+							  {{else}}
+								<li><b>{{ $temp | strings.FirstUpper }}</b></li>
+							{{ end }}
+
+						{{ end }}
+					</ol>
+			</div>				
+			{{ end }}
+
+			
+
+			{{ with .Params.lj }}
+				<div class="alert alert-info d-flex" role="alert">
+					<div class="flex-shrink-1 alert-icon">🖋</div>
+				 	<div class="w-100">
+							Впервые эта статья была опубликована в <a href={{ . }} target="_blank" title="туда совершенно незачем ходить, вариант на сайте полнее и лучше">Живом Журнале</a> много лет назад. Версия, публикуемая здесь, значительно отредактирована и дополнена автором.
+					</div>
+				</div>
+				<p></p>
+			{{ end }}
+
+			{{ if ne .Params.toc false -}}
+			<nav class="d-xl-none mb-2" aria-label="Quaternary navigation">
+				{{ partial "sidebar/docs-toc.html" . }}
+			</nav>
+			{{ end -}}
+
+			{{ .Content }}
+
+			<b>{{ delimit .Params.authors ", " }}</b><br>
+			<i>{{ .Params.date | time.Format "2 January 2006"}}</i>
+<!--
+			<div class="page-footer-meta d-flex flex-column flex-md-row justify-content-between">
+				{{ if .Site.Params.lastMod -}}
+					{{ partial "main/last-modified.html" . }}
+				{{ end -}}
+				{{ if .Site.Params.editPage -}}
+					{{ partial "main/edit-page.html" . }}
+				{{ end -}}
+			</div> -->
+			{{ partial "main/docs-navigation.html" . }}
+			<!--
+			{{ if not .Site.Params.options.collapsibleSidebar -}}
+				{{ partial "main/docs-navigation.html" . }}
+			{{ else -}}
+				<div class="my-n3"></div>
+			{{ end -}}
+			-->
+			<script defer src="https://cdn.commento.io/js/commento.js"></script>
+				<div id="commento"></div>
+
+		</div>
+		</main>
+	</div>
+
+{{ end }}

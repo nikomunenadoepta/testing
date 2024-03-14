@@ -1,0 +1,75 @@
+# Meta Data for SEO
+
+## Homepage
+title = "Т Е С Т И Р У Й"
+titleSeparator = "—"
+titleAddition = "Полигон ебаный"
+description = "Чиним гитары и бас-гитары. Особенно бас-гитары. Делимся опытом."
+
+## Open Graph
+images = ["ebgdae.jpg"]
+ogLocale = "ru_RU"
+
+## Twitter Cards
+
+
+## Sitelinks Search Box
+siteLinksSearchBox = true
+
+## Chrome Browser
+themeColor = "#fff"
+
+# Images
+quality = 85
+bgColor = "#fff"
+landscapePhotoWidths = [480, 960]
+portraitPhotoWidths = [480, 960]
+lqipWidth = "20x"
+smallLimit = "2001"
+
+# Images
+imageResponsive = true
+imageConvertTo = "webp"
+imageImageSizes = ["720","1080","1400"]
+singleSize = false
+imageAddClass = "img-fluid"
+
+### Image template
+defaultImage = "default-image.png" # put in `./assets/images/`
+fillImage = "1270x740 Center" # normalize image size
+
+# Feed
+copyRight = "Copyright (с) 2006-2222 Misha Tiunov"
+
+# Alert
+alert = false
+alertDismissable = true
+# alertText = "Introducing the Doks child theme, several DX + UX updates, and more! <a class=\"alert-link stretched-link\" href=\"https://getdoks.org/blog/doks-v0.2/\" target=\"_blank\" rel=\"noopener\">Check out Doks v0.2</a>"
+alertText = "Вы толковый мастер из Москвы? Айда к нам работать. У нас хорошо и сложно."
+
+[sections]
+  sectionNav = ["articles","workshops","about","customshop"]
+
+[options]
+  lazySizes = true
+  clipBoard = true
+  instantPage = true
+  flexSearch = true
+  searchSectionsShow = []
+  searchSectionsIndex = ["HomePage","articles","about","learn","customshop","workshops"]
+  darkMode = true
+  bootStrapJs = true
+  breadCrumb = false
+  highLight = true
+  kaTex = false
+  multilingualMode = false
+  docsVersioning = false
+  fullWidth = false
+  navbarSticky = false
+  toTopButton = false
+  scrollSpy = false # experimental; needs Bootstrap >= 5.2.0-beta1
+
+[menu]
+  [menu.section]
+    auto = true
+    collapsibleSidebar = false

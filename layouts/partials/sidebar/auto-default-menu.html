@@ -1,0 +1,47 @@
+<!-- Auto default section menu -->
+
+{{ $currentPage := . -}}
+{{ $section := $currentPage.Section -}}
+{{ range (where .Site.Sections "Section" "in" $section) }}
+
+  {{ range .Sections }}
+    {{ $active := in $currentPage.RelPermalink .RelPermalink }}
+    <h3 class="h6 text-uppercase mb-2">{{ .Title }}</h3> <!--заголовки верхние меню-->
+    <ul class="list-unstyled">
+      {{ range .Pages }}
+        {{ if .IsNode }}
+          {{ $active := in $currentPage.RelPermalink .RelPermalink }}
+          <h4 class="h6 text-uppercase ms-3 mt-3 mb-2">{{ .Title }}</h4> <!--заголовки второго уровня меню-->
+          <ul class="list-unstyled ms-3">
+            {{ range .Pages }}
+              {{ if .IsNode }}
+                {{ $active := in $currentPage.RelPermalink .RelPermalink }}
+                <h5 class="h6 text-uppercase mt-2 mb-2">{{ .Title }}</h5> <!--заголовки третьего уровня меню-->
+                <ul class="list-unstyled ms-3">
+                  {{ range .Pages }}
+                    {{ $active := in $currentPage.RelPermalink .RelPermalink }}
+                    <li><a class="docs-link{{ if $active }} active{{ end }}" href="{{ .RelPermalink }}">{{ .Name }}</a></li> <!--содержимое третьего уровня меню-->
+                  {{ end }}
+                </ul>
+              {{ else }}
+                {{ $active := in $currentPage.RelPermalink .RelPermalink }}
+                <li><a class="docs-link{{ if $active }} active{{ end }}" href="{{ .RelPermalink }}">{{ .Name }}</a></li><!--содержимое второго уровня меню-->
+              {{ end }}
+            {{ end }}
+          </ul>
+        {{ else }}
+          {{ $active := in $currentPage.RelPermalink .RelPermalink }}
+          <li><a class="docs-link{{ if $active }} active{{ end }}" href="{{ .RelPermalink }}">{{ .Name }}</a></li><!--содержимое первого уровня меню-->
+        {{ end }}
+      {{ end }}
+    
+  {{ end }}
+
+  <ul class="list-unstyled bottom-of-the-menu" >
+    {{ range .RegularPages}}
+    {{ $active := in $currentPage.RelPermalink .RelPermalink }}
+              <li><a class="docs-link{{ if $active }} active{{ end }}" href="{{ .RelPermalink }}">{{ .Name }}</a></li>
+    {{ end }}
+    </ul>
+
+{{ end }}

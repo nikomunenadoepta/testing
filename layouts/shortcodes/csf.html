@@ -1,0 +1,49 @@
+<!-- Carousel folder. Makes a carousel with every image inside the folder you've given as an inner argument-->
+
+{{ $allImages := $.Page.Resources.ByType "image" }}
+{{ $imagesInFolder := $allImages.Match (printf "%s/*" .Inner) }}
+
+<!-- numeric ids break the carousel in bs 5.3.2, so we're adding a letter q before the id in case it's numeric -->
+
+{{ $carouselNFID := .Get "id" | default "tigidik" }}
+{{ $carouselFID := printf "q%s" $carouselNFID }}
+
+<div id="{{ $carouselFID }}" class="carousel carousel-dark slide">
+    
+    <div class="carousel-indicators" style="margin-bottom: -1.2rem !important;">
+
+        {{ range $index, $img := $imagesInFolder }}
+            <button type="button" data-bs-target="#{{ $carouselFID }}" data-bs-slide-to="{{ $index }}" {{ if eq $index 0 }}class="active" aria-current="true"{{ end }} aria-label="Slide {{ add $index 1 }}"></button>
+        {{ end }}
+        
+    </div>
+   
+    <div class="carousel-inner">
+        {{ range $index, $img := $imagesInFolder }}
+             {{ $img := $img.Resize "1200x q100 Lanczos" }}
+             {{ $img := $img.Fill "1200x900 webp q85 Lanczos" }} <!-- scaling and cropping to fit 1200x900 while maintaining original proportions -->
+            <span class="carousel-item {{ if eq $index 0 }}active{{ end }}">
+                <a href="{{ $img }}" class="lightbox-image"><img src="{{ $img.RelPermalink }}" loading="lazy" class="d-block w-100" alt="carousel is broken" style="aspect-ratio: 4/3;"></a>
+            </span>
+        {{ end }}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#{{ $carouselFID }}" data-bs-slide="prev" style="left: -30px !important;">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#{{ $carouselFID }}" data-bs-slide="next" style="right: -30px !important;">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+
+<style>
+    .carousel-control-prev,
+    .carousel-control-next,
+    .carousel-indicators {
+        width: auto;
+    }
+
+
+</style>

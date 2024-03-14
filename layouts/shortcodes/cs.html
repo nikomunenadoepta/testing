@@ -1,0 +1,61 @@
+{{ $imagePaths := split .Inner " " }}
+
+<!-- numeric ids break the carousel in bs 5.3.2, so we're adding a letter q before the id in case it's numeric -->
+
+{{ $carouselNID := .Get "id" | default "tigidik" }}
+{{ $carouselID := printf "q%s" $carouselNID }}
+
+{{ $pageURL := .Page.RelPermalink }}
+
+{{ if gt (len $imagePaths) 0 }}
+<div id="{{ $carouselID }}" class="carousel carousel-dark slide">
+    <div class="carousel-indicators" style="margin-bottom: -1.2rem !important;">
+        {{ range $index, $path := $imagePaths }}
+            <button type="button" data-bs-target="#{{ $carouselID }}" data-bs-slide-to="{{ $index }}" {{ if eq $index 0 }}class="active" aria-current="true"{{ end }} aria-label="Slide {{ add $index 1 }}"></button>
+        {{ end }}
+    </div>
+    <div class="carousel-inner">
+        {{ range $index, $path := $imagePaths }}
+
+        <!-- not sure if there should be %s%s or %s/%s below. Local builds are fine with both. Render.com builds do not work with / version, which results in an additional slash in the imgsrc -->
+
+            {{ $imageURL := printf "%s%s" $pageURL $path }}
+
+            {{ $extractedImg := $.Page.Resources.GetMatch $path }}
+
+            {{ $img := $extractedImg.Resize "1200x q100 Lanczos" }}
+            {{ $img := $img.Fill "1200x900 webp q85 Lanczos" }}
+
+            <span class="carousel-item {{ if eq $index 0 }}active{{ end }}">
+                <a href="{{ $imageURL }}" class="lightbox-image"><img src="{{ $img.RelPermalink }}" class="d-block w-100" loading="lazy" alt="carousel is broken" style="aspect-ratio: 4/3;"></a>
+
+                
+            </span>
+        {{ end }}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#{{ $carouselID }}" data-bs-slide="prev" style="left: -30px !important;">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#{{ $carouselID }}" data-bs-slide="next" style="right: -30px !important;">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+{{ end }}
+
+
+
+
+
+
+
+<style>
+    .carousel-control-prev,
+    .carousel-control-next,
+    .carousel-indicators {
+        width: auto;
+    }
+
+
+</style>

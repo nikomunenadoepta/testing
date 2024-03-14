@@ -1,0 +1,209 @@
+{{ define "main" }}
+	<div class="row flex-lg-nowrap">
+		<div class="col-lg-4 docs-sidebar{{ if ne .Site.Params.options.navbarSticky true }} docs-sidebar-top{{ end }} d-none d-lg-block">
+			<nav {{ if eq .Site.Params.menu.section.collapsibleSidebar false }}id="sidebar-default" {{ end }}class="docs-links" aria-label="Main navigation">
+			{{ partial "sidebar/articles-menu.html" . }}
+		</nav>
+	</div>
+	<main class="docs-content col-lg-12 mx-lg-auto">
+		
+		{{ .Content }}
+		
+		<p class="lead text-center">{{ .Params.lead | safeHTML }}</p>
+		{{ if ne (hugo.Environment) "development" -}}
+			<div class="d-flex justify-content-center">
+			</div>
+		{{ end -}}
+
+		<h2>{{ .Title }}</h2>
+
+		<ul class="nav nav-pills" id="myTabs">
+			<li>
+			  <a class="nav-link active" id="tab1" data-bs-toggle="tab" href="#cards" aria-current="page">Карточками</a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link" id="tab2" data-bs-toggle="tab" href="#list">Списком</a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link" id="tab3" data-bs-toggle="tab" href="#toc">Оглавлением</a>
+			</li>
+			 <li class="nav-item ms-auto">
+				<a class="nav-link" id="tab4" data-bs-toggle="tab" href="#stats">Статистика</a>
+			  </li>
+		</ul>
+
+			<div class="tab-content mt-2">
+				<div class="tab-pane fade show active" id="cards">
+					<div class="row row-cols-1 row-cols-md-2 g-5">
+					{{ range .Pages.ByDate.Reverse }}
+						<div class="col">
+							{{ .Render "articles-card" -}}
+						</div>
+					{{ end }}
+					</div>
+				</div>
+		
+				<div class="tab-pane fade" id="list">
+
+				{{ $starting := 3000 }}
+				
+				{{ range .Pages.ByDate.Reverse }}
+					{{ $yearInt := .Date.Format "2006" | int }}
+					{{ if lt $yearInt $starting }}
+						<h4 class="mb-1">{{ .Date.Format "2006" }}</h4>
+						{{ $starting = $yearInt }}
+					{{ end }}
+					<a href={{ .RelPermalink }}>{{.Title}}</a><br>
+				{{ end }}
+				</div>
+
+				<div class="tab-pane fade" id="toc">
+				<p><i>Разделение оглавления на темы условно, потому что я часто ухожу в оффтопик и могу в посте про верхние порожки обсуждать циркулярные пилы. Конкретную тему лучше искать в списке тегов или поиском.</i></p>
+				
+				<h2 class="mb-1">Теория</h2>
+				<ul>
+					{{ range where .Pages.ByDate "Params.intoc" "eq" "теория" }}
+					<li><a href={{ .RelPermalink }}>{{.Title}}</a></li>
+				{{ end }}
+				</ul>
+
+				<h2 class="mb-1">Материалы</h2>
+				<ul>
+					{{ range where .Pages.ByDate "Params.intoc" "eq" "материалы" }}
+					<li><a href={{ .RelPermalink }}>{{.Title}}</a></li>
+				{{ end }}
+				</ul>
+
+				<h2 class="mb-1">Инструменты</h2>
+				<ul>
+					{{ range where .Pages.ByDate "Params.intoc" "eq" "инструменты" }}
+					<li><a href={{ .RelPermalink }}>{{.Title}}</a></li>
+				{{ end }}
+				</ul>
+
+				<h2 class="mb-1">Комплектующие</h2>
+				<ul>
+					{{ range where .Pages.ByDate "Params.intoc" "eq" "комплектующие" }}
+					<li><a href={{ .RelPermalink }}>{{.Title}}</a></li>
+				{{ end }}
+				</ul>
+
+				<h2 class="mb-0">Процедуры</h2>
+					<div class="ms-3">
+					<h3 class="mb-1">Лады, накладка, радиус, инкрустации</h3>
+					<ul>
+						{{ range where .Pages.ByDate "Params.intoc" "eq" "процедуры-лады" }}
+						<li><a href={{ .RelPermalink }}>{{.Title}}</a></li>
+					{{ end }}
+					</ul>
+
+					<h3 class="mb-1">Склейки</h3>
+					<ul>
+						{{ range where .Pages.ByDate "Params.intoc" "eq" "процедуры-склейка" }}
+						<li><a href={{ .RelPermalink }}>{{.Title}}</a></li>
+					{{ end }}
+					</ul>
+
+					<h3 class="mb-1">Электрика</h3>
+					<ul>
+						{{ range where .Pages.ByDate "Params.intoc" "eq" "процедуры-электрика" }}
+						<li><a href={{ .RelPermalink }}>{{.Title}}</a></li>
+					{{ end }}
+					</ul>
+
+					<h3 class="mb-1">Косметика</h3>
+					<ul>
+						{{ range where .Pages.ByDate "Params.intoc" "eq" "процедуры-косметика" }}
+						<li><a href={{ .RelPermalink }}>{{.Title}}</a></li>
+					{{ end }}
+					</ul>
+
+					<h3 class="mb-1">Анкер</h3>
+					<ul>
+						{{ range where .Pages.ByDate "Params.intoc" "eq" "процедуры-анкер" }}
+						<li><a href={{ .RelPermalink }}>{{.Title}}</a></li>
+					{{ end }}
+					</ul>
+
+					<h3 class="mb-1">Верхний порожек, топ-лок</h3>
+					<ul>
+						{{ range where .Pages.ByDate "Params.intoc" "eq" "процедуры-порожек" }}
+						<li><a href={{ .RelPermalink }}>{{.Title}}</a></li>
+					{{ end }}
+					</ul>
+
+					<h3 class="mb-1">Бридж (струнодержатель, машинка)</h3>
+					<ul>
+						{{ range where .Pages.ByDate "Params.intoc" "eq" "процедуры-бридж" }}
+						<li><a href={{ .RelPermalink }}>{{.Title}}</a></li>
+					{{ end }}
+					</ul>
+
+			{{/*		<h3 class="mb-1">Колки</h3>
+					<ul>
+						{{ range where .Pages.ByDate "Params.intoc" "eq" "процедуры-колки" }}
+						<li><a href={{ .RelPermalink }}>{{.Title}}</a></li>
+					{{ end }}
+					</ul>
+			*/}}
+					<h3 class="mb-1">Прочее</h3>
+					<ul>
+						{{ range where .Pages.ByDate "Params.intoc" "eq" "процедуры-прочее" }}
+						<li><a href={{ .RelPermalink }}>{{.Title}}</a></li>
+					{{ end }}
+					</ul>
+				</div>
+
+				<h2 class="mb-1">Кастомшоп</h2>
+					<div class="ms-3">
+					<h3 class="mb-1">Colossus:</h3>
+					<ol>
+						{{ range where .Pages.ByDate "Params.series" "eq" "colossus" }}
+						{{ $temp := split .Title ": " | last 1 }}
+						{{ $temp := index $temp 0 }}
+						<li><a href={{ .RelPermalink }}>{{ $temp | strings.FirstUpper }}</a></li>
+					{{ end }}
+					</ol>
+				</div>
+
+
+				<h2 class="mb-1">Другое</h2>
+					<ul>
+						{{ range where .Pages.ByDate "Params.intoc" "eq" "всякое" }}
+						<li><a href={{ .RelPermalink }}>{{.Title}}</a></li>
+					{{ end }}
+					</ul>
+				</div>
+
+
+				<div class="max700px tab-pane fade" id="stats">
+
+				{{ $totalWords := 0 }}
+				{{ range .Site.RegularPages }}
+    			{{ $totalWords = add $totalWords (.WordCount) }}
+				{{ end }}
+
+				<h2>Статистика раздела</h2>
+
+				<p>Всего статей: <b>{{ (where .Site.RegularPages "Section" "==" "articles") | len }}</b>.</p>
+
+				<p>Количество слов: <b>{{ $totalWords }}</b>.</p>
+					
+				<p>Общее время прочтения составляет более <b>{{ div $totalWords 200 60 }}</b> часов — при условии, что чтение происходит со скоростью 200 слов в минуту, а картинки вы пропускаете.</p>
+				
+				{{ $totalImages := 0 }}
+				{{ range .Pages.ByDate.Reverse }}
+					{{ $temp := len (.Resources.ByType "image") }}
+					{{ $totalImages = add $totalImages $temp}}
+				{{ end }}
+
+				<p>Картинок, кстати, <b>{{ $totalImages }}</b>.</p>
+				</div>
+
+		  </div>
+		  
+
+		
+	</main>
+</div>
+{{ end }}

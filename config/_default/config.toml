@@ -1,0 +1,105 @@
+baseurl = "https://eeeee.ru/"
+canonifyURLs = false
+disableAliases = false
+disableHugoGeneratorInject = false
+enableEmoji = true
+enableGitInfo = false
+enableRobotsTXT = true
+paginate = 10
+rssLimit = 10
+timeout = "300s"
+
+# Multilingual
+defaultContentLanguage = "ru"
+# disableLanguages = ["de", "nl"]
+# defaultContentLanguageInSubdir = true
+
+# add redirects/headers
+[outputs]
+home = ["HTML", "RSS"]
+section = ["HTML", "RSS", "SITEMAP"]
+
+# add output format for section sitemap.xml
+[outputFormats.SITEMAP]
+mediaType = "application/xml"
+baseName = "sitemap"
+isHTML = false
+isPlainText = true
+noUgly = true
+rel  = "sitemap"
+
+[imaging]
+  hint = 'picture'
+  quality = 75
+  resampleFilter = 'CatmullRom'
+
+[caches]
+  [caches.getjson]
+    dir = ":cacheDir/:project"
+    maxAge = "10s"
+
+[sitemap]
+  changefreq = "weekly"
+  filename = "sitemap.xml"
+  priority = 0.5
+
+[taxonomies]
+  element = "elements"
+  activity = "activities"
+  tag = "tags"
+  type = "types"
+  functionality = "functionalities"
+  brand = "brands"
+  series = "series"
+
+[permalinks]
+  blog = "/blog/:title/"
+  elements = "/articles/elements/:title/"
+  types = "/articles/types/:title/"
+  functionalities = "/articles/functionalities/:title/"
+  activities = "/articles/activities/:title/"
+  brands = "/articles/brands/:title/"
+  series = "/articles/series/:title/"
+
+
+
+[minify.tdewolff.html]
+  keepWhitespace = false
+
+[related]
+  threshold = 80
+  includeNewer = true
+  toLower = false
+    [[related.indices]]
+    name = "categories"
+    weight = 100
+    [[related.indices]]
+    name = "tags"
+    weight = 80
+    [[related.indices]]
+    name = "date"
+    weight = 10
+
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.80.0"
+    max = ""
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+  [[module.mounts]]
+    source = "layouts"
+    target = "layouts"
+  [[module.mounts]]
+    source = "modules/flexsearch"
+    target = "assets/js/vendor/flexsearch"
+  [[module.mounts]]
+    source = "modules/katex"
+    target = "assets/js/vendor/katex"
+    
+  [[module.imports]]
+    path = 'hugo-shortcode-gallery'

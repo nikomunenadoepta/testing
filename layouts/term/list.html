@@ -1,0 +1,61 @@
+{{ define "main" }}
+	<div class="row flex-xl-nowrap">
+		<div class="col-lg-5 col-xl-4 docs-sidebar{{ if ne .Site.Params.options.navbarSticky true }} docs-sidebar-top{{ end }} d-none d-lg-block">
+			<nav {{ if eq .Site.Params.menu.section.collapsibleSidebar false }}id="sidebar-default" {{ end }}class="docs-links" aria-label="Main navigation">
+			{{ partial "sidebar/articles-menu.html" . }}
+		</nav>
+	</div>
+	<main class="docs-content col-lg-11 mx-xl-auto">
+
+		{{ .Content }}
+		
+		<p class="lead text-center">{{ .Params.lead | safeHTML }}</p>
+		{{ if ne (hugo.Environment) "development" -}}
+			<div class="d-flex justify-content-center">
+			</div>
+		{{ end -}}
+		<h2>Cтатьи по тегу <i>{{ .Title }}</i></h2>
+		
+
+		<ul class="nav nav-pills" id="myTabs">
+			<li>
+			  <a class="nav-link active" id="tab1" data-bs-toggle="tab" href="#cards" aria-current="page">Карточками</a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link" id="tab2" data-bs-toggle="tab" href="#list">Списком</a>
+			</li>
+		  </ul>
+		  
+		  <div class="tab-content">
+				<div class="tab-pane fade show active" id="cards">
+                    <div style="height: 0.5em;"></div>
+					<div class="row row-cols-1 row-cols-md-2 g-5">
+					{{ range .Pages.ByDate.Reverse }}
+						<div class="col">
+							{{ .Render "articles-card" -}}
+						</div>
+					{{ end }}
+					</div>
+				</div>
+		
+			<div class="tab-pane fade" id="list">
+
+				{{ $starting := 3000 }}
+				
+				{{ range .Pages.ByDate.Reverse }}
+					{{ $yearInt := .Date.Format "2006" | int }}
+					{{ if lt $yearInt $starting }}
+						<h4>{{ .Date.Format "2006" }}</h4>
+						{{ $starting = $yearInt }}
+					{{ end }}
+					<a href={{ .RelPermalink }}>{{.Title}}</a><br>
+				{{ end }}
+
+			</div>
+		  </div>
+		  
+
+		
+	</main>
+</div>
+{{ end }}

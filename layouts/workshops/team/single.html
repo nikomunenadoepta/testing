@@ -1,0 +1,97 @@
+{{ define "main" }}
+	<div class="row flex-xl-nowrap">
+		<div class="col-lg-5 col-xl-4 docs-sidebar{{ if ne .Site.Params.options.navbarSticky true }} docs-sidebar-top{{ end }} d-none d-lg-block">
+			<nav {{ if eq .Site.Params.menu.section.collapsibleSidebar false }}id="sidebar-default" {{ end }}class="docs-links" aria-label="Main navigation">
+				{{ partial "sidebar/workshops-menu.html" . }}
+			</nav>
+		</div>
+		{{ if eq .Params.toc true -}}
+		<nav class="docs-toc{{ if ne .Site.Params.options.navbarSticky true }} docs-toc-top{{ end }} d-none d-xl-block col-xl-3" aria-label="Secondary navigation">
+		{{ partial "sidebar/docs-toc.html" . }}
+		</nav>
+		{{ end -}}
+		{{ if .Params.toc -}}
+		<main class="docs-content col-lg-11 col-xl{{ if eq .Site.Params.options.fullWidth false }}-9{{ end }} mx-xl-5">
+		{{ else -}}
+		<main class="docs-content col-lg-11 col-xl-9 mx-xl-5">
+		{{ end -}}
+
+		<div class="max700px">
+
+			{{ if .Site.Params.options.breadCrumb -}}
+				<!-- https://discourse.gohugo.io/t/breadcrumb-navigation-for-highly-nested-content/27359/6 -->
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						{{ partial "main/breadcrumb" . -}}
+						<li class="breadcrumb-item active" aria-current="page">{{ .Title }}</li>
+					</ol>
+				</nav>
+			{{ end }}
+
+			<h2 class="mb-1">{{ .Title }}</h2>
+
+
+
+				{{ $img := .Resources.GetMatch "img/01.jpg" }}
+						{{ $img := $img.Fill "450x600" }}
+						<img src="{{ $img.RelPermalink}}" align=right width=40% loading="lazy" style="margin-left:5%; margin-bottom:5%">
+
+						<p><i>{{ delimit .Params.Role ", " }}</i></p>
+						
+						<p>{{ if isset .Params "leftdate" }}
+
+							{{ $left := dateFormat "2006" .Params.leftdate | int}}
+						
+							<b>Работал{{ if .Params.female }}a{{ end }}  у нас</b> c {{ .Params.date | time.Format "2 January 2006"}} по {{ .Params.leftdate | time.Format "2 January 2006" }}.
+
+						{{ else }}
+						
+							<b>В мастерской</b> с {{ .Params.date | time.Format "2 January 2006" }}.
+
+						{{ end }}</p>
+
+						<p><b>С гитарами</b> c {{ .Params.startyear }}.</p>
+
+						{{ with .Params.specialty }}<p><b>Специализация:</b> 
+							{{ delimit . ", " }}.</p>
+						{{ end }} 
+						
+						<hr width="55%">
+
+						{{ with .Params.guitars }}<p><b>Люблю</b> 
+							{{ delimit . ", "}}.</p>
+						{{ end }}
+
+						{{ with .Params.lasttosale }}<p><b>Гитара, которую я продам последней:</b> 
+							{{ delimit . ", "}}.</p>
+						{{ end }}
+
+						{{ with .Params.albums }}<p><b>Три самых главных альбома:</b><br>
+							{{ range . }}
+								— {{ . | safeHTML }}<br>
+							{{end}}</p>
+						{{ end }}
+
+						{{ with .Params.inspiration }}<p><b>Вдохновляют:</b>
+							{{ delimit . ", "}}.</p>
+						{{ end }}
+
+						{{ with .Params.hobbies }}<p><b>Интересы вне работы:</b>
+							{{ delimit . ", "}}.</p>
+						{{ end }}
+
+
+			{{ .Content }}
+
+			<div class="page-footer-meta d-flex flex-column flex-md-row justify-content-between">
+				{{ if .Site.Params.lastMod -}}
+					{{ partial "main/last-modified.html" . }}
+				{{ end -}}
+				{{ if .Site.Params.editPage -}}
+					{{ partial "main/edit-page.html" . }}
+				{{ end -}}
+			</div>
+		</div>
+		</main>
+	</div>
+{{ end }}

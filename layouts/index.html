@@ -1,0 +1,124 @@
+{{ define "main" }}
+<section class="section container-fluid pb-3">
+  <div class="row justify-content-center">
+    <div class="col-lg-12 text-center">
+      <h2 class="display-2 my-0">{{ .Title }}</h2>
+    </div>
+    <div class="col-lg-9 col-xl-8 text-center">
+      <p class="meta">{{ .Params.lead | safeHTML }}</p>
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{ define "sidebar-prefooter" }}
+
+<section class="section section-sm">
+  <div class="container my-4">
+    <div class="row justify-content-center">
+      <div class="d-flex flex-column my-auto col-lg-7 text-center">
+
+        <p class="lead">Ремонт и модификации любой сложности: можем струны поменять, а можем новый анкер поставить. </p>
+
+        <p class="lead">Мы хорошо разбираемся в гитарах, потому что работаем с 2006-го и повидали всякое. Каждый год через наши мастерские проходит более <i>тысячи</i> инструментов.</p>
+
+        <p class="lead">У нас три отделения: два в Москве и одно в Тбилиси. С другими городами и странами мы работаем <a href="/workshops/shipment/">по пересылке</a>.</p>
+
+      </div>
+      <div class="col-lg-7 offset-lg-1">
+        
+        <h2 class="h3 mb-1"><a href="/workshops/moscow/main/">Мастерская на Самокатной</a></h2>
+        <p>Специализируемся на сложных задачах, беремся за любые. Принимаем по записи.</p>
+        
+        <h2 class="h3 mt-5 mb-1"><a href="/workshops/moscow/branch/">Филиал на Таганке</a></h2>
+        <p>Мелкий ремонт и обслуживание в день обращения (если этот день — вторник, четверг или суббота).</p>
+        
+        <h2 class="h3 mt-5 mb-1"><a href="/workshops/tbilisi/">Мастерская в Тбилиси</a></h2>
+        <p>Делаем все, кроме тяжелых покрасок. </p>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ end }}
+
+{{ define "sidebar-footer" }}
+<section class="section section-sm container-fluid dark-inverted">
+  <div class="col-lg-16 text-start">
+    <h6 class="display-6 mb-0 mt-4">Статьи о гитарном деле:</h6>
+  </div>
+  <div class="row justify-content-center text-center">
+
+      {{- range (where site.RegularPages "Section" "articles") | first 2 }}
+      <div class="col-xl-4 col-md-8 my-0">
+        <a href="{{ .RelPermalink }}">
+
+        {{ $path := .Params.Images }}
+        {{ $path := delimit $path "" }}
+
+        {{ $extractedImg := .Resources.GetMatch $path }}
+
+        {{ $thumb := $extractedImg.Resize "600x webp q75 Lanczos" }}
+        {{ $thumb := $thumb.Filter (images.Brightness -15 )}}
+
+        <div class="card text-bg-dark border-dark">
+          <img src="{{ $thumb.RelPermalink }}" class="card-img-top" alt="...">
+          <div class="card-img-overlay d-flex align-items-end">
+            <h4 class="card-title" style="text-shadow: 0 0 5px black;">{{ .Title }}</h4>
+            
+          </div>
+        </div>
+        </a>
+      </div>
+      {{ end }}
+
+      {{- range shuffle (where site.RegularPages "Section" "articles" | after 2) | first 6 }}
+      <div class="col-xl-4 col-md-8 mt-0">
+        <a href="{{ .RelPermalink }}">
+
+        {{ $path := .Params.Images }}
+        {{ $path := delimit $path "" }}
+ 
+        {{ $extractedImg := .Resources.GetMatch $path }}
+
+        {{ $thumb := $extractedImg.Resize "600x webp q75 Lanczos" }}
+        {{ $thumb := $thumb.Filter (images.Brightness -15 )}}
+
+        <div class="card text-bg-dark border-dark">
+          <img src="{{ $thumb.RelPermalink }}" class="card-img-top" alt="...">
+          <div class="card-img-overlay d-flex align-items-end">
+            <h4 class="card-title" style="text-shadow: 0 0 5px black;">{{ .Title }}</h4>
+            
+          </div>
+        </div>
+        </a>
+      </div>
+      {{ end }}
+
+  </div>
+  <div class="col-lg-16">
+    <h6 class="display-6 mt-0 mb-4 text-end"><a href="/articles/">... и еще <b>{{ $articles := where .Site.RegularPages "Section" "articles" }}{{ sub (len $articles) 8 }}</b> на сайте</a></h6>
+  </div>
+</section>
+
+<section class="section container-fluid alert-info py-4">
+  <div class="row justify-content-center">
+    <div class="col text-center">
+      <p class="display-4 my-0">(а также блоги и картинки <a href="https://vk.com/mux22" target="_blank" rel="noopener">на вк</a>, в <a href="https://t.me/guitar_hangar_gazeta" target="_blank" rel="noopener">телеграме</a> и в <a href="https://instagram.com/guitar_hangar" target="_blank" rel="noopener">инсте</a>)</p>
+    </div>
+  </div>
+</section>
+
+<section class="section container-fluid" id="section3" data-speed="2" data-type="background" style="color:aliceblue; text-shadow: 0 0 3px black;">
+  <div class="row justify-content-center">
+    <div class="col-lg-10 text-center">
+      <p class="display-6 mt-5 mb-3"><a href="/customshop/" style="color:white;">Кастомшоп тоже есть. Делаем редко и дорого, но всегда что-то интересное.</a></p>
+    </div>
+    <div class="col-lg-9 col-xl-8 text-center mt-3">
+      <p class="meta">(должна же тут быть хоть одна картинка с гитарой)</p>
+    </div>
+  </div>
+</section>
+
+{{ end }}

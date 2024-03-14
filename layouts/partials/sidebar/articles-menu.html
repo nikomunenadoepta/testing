@@ -1,0 +1,44 @@
+{{ $currentPage := . -}}
+
+<br>
+
+<ul class="list-unstyled">
+  {{ $active := eq $currentPage.Title "Все статьи" -}}
+  <li>{{ if not $active }}<a class="docs-link active" href="/articles/">{{ end }}<span class="d-flex {{ if $active }}onpage{{ end }}"><b>Все статьи</b><span class="badge bg-light text-dark fw-normal ms-auto me-lg-4">{{ len (where .Site.RegularPages "Section" "==" "articles") }}</span></span>{{ if not $active }}</a>{{ end }}</li>
+</ul>
+
+<h3 style="font-size: 1rem;">По элементу гитары</h3>
+<ul class="list-unstyled">
+  {{ range .Site.Taxonomies.elements }}
+    {{ $onlist := in $currentPage.Params.elements .Page.Title -}}
+    {{ $active := eq $currentPage.RelPermalink .Page.RelPermalink  }}
+  <li>{{ if not $active }}<a class="docs-link d-flex" href="{{ .Page.RelPermalink }}">{{ else }}<span class="onpage d-flex">{{ end }}<span class="d-flex{{ if $onlist }} onlist{{ end }}">{{ .Page.Title | strings.FirstUpper }}</span><span class="badge bg-light text-dark fw-normal ms-auto me-lg-4">{{ .Count }}</span>{{ if not $active }}</a>{{ else }}</span>{{ end }}</li>
+  {{ end }}
+</ul>
+
+<h3 style="font-size: 1rem;">По деятельности</h3>
+<ul class="list-unstyled">
+  {{ range .Site.Taxonomies.activities }}
+    {{ $onlist := in $currentPage.Params.activities .Page.Title -}}
+    {{ $active := eq $currentPage.RelPermalink .Page.RelPermalink  }}
+    <li>{{ if not $active }}<a class="docs-link d-flex" href="{{ .Page.RelPermalink }}">{{ else }}<span class="onpage d-flex">{{ end }}<span class="d-flex{{ if $onlist }} onlist{{ end }}">{{ .Page.Title | strings.FirstUpper }}</span><span class="badge bg-light text-dark fw-normal ms-auto me-lg-4">{{ .Count }}</span>{{ if not $active }}</a>{{ else }}</span>{{ end }}</li>
+    {{ end }}
+</ul>
+
+<h3 style="font-size: 1rem;">По жанру</h3>
+<ul class="list-unstyled">
+  {{ range .Site.Taxonomies.types }}
+    {{ $onlist := in $currentPage.Params.types .Page.Title -}}
+    {{ $active := eq $currentPage.RelPermalink .Page.RelPermalink  }}
+    <li>{{ if not $active }}<a class="docs-link d-flex" href="{{ .Page.RelPermalink }}">{{ else }}<span class="onpage d-flex">{{ end }}<span class="d-flex{{ if $onlist }} onlist{{ end }}">{{ .Page.Title | strings.FirstUpper }}</span><span class="badge bg-light text-dark fw-normal ms-auto me-lg-4">{{ .Count }}</span>{{ if not $active }}</a>{{ else }}</span>{{ end }}</li>
+    {{ end }}
+</ul>
+
+<h3 style="font-size: 1rem;">По марке</h3>
+<ul class="list-unstyled">
+  {{ range .Site.Taxonomies.brands }}
+    {{ $onlist := in $currentPage.Params.brands .Page.Title -}}
+    {{ $active := eq $currentPage.RelPermalink .Page.RelPermalink  }}
+    <li>{{ if not $active }}<a class="docs-link d-flex" href="{{ .Page.RelPermalink }}">{{ else }}<span class="onpage d-flex">{{ end }}<span class="d-flex{{ if $onlist }} onlist{{ end }}">{{ .Page.Title | strings.FirstUpper }}</span><span class="badge bg-light text-dark fw-normal ms-auto me-lg-4">{{ .Count }}</span>{{ if not $active }}</a>{{ else }}</span>{{ end }}</li>
+    {{ end }}
+</ul>

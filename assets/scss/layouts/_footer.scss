@@ -1,0 +1,36 @@
+.footer {
+  border-top: 1px solid $gray-200;
+  padding-top: 1.125rem;
+  padding-bottom: 1.125rem;
+  background-color: $gray-100;
+  color: $black;
+}
+
+.footer h1,
+.footer h2,
+.footer h3,
+.footer h4,
+.footer h5,
+.footer h6 {
+  color: $gray-700;
+  margin-bottom: 0.5rem;
+}
+
+.footer ul {
+  margin-bottom: 0;
+}
+
+.footer li {
+  font-size: $font-size-sm;
+  margin-bottom: 0;
+}
+
+@include media-breakpoint-up(md) {
+  .footer li {
+    font-size: $font-size-base;
+  }
+}
+
+.footer a {
+  color: $gray-900 !important;
+}

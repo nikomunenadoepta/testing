@@ -1,0 +1,25 @@
+canonifyURLs = false
+
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.80.0"
+    max = ""
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+  [[module.mounts]]
+    source = "layouts"
+    target = "layouts"
+  [[module.mounts]]
+    source = "modules/flexsearch"
+    target = "assets/js/vendor/flexsearch"
+  [[module.mounts]]
+    source = "modules/katex"
+    target = "assets/js/vendor/katex"
+  [[module.mounts]]
+    source = "modules/layouts"
+    target = "layouts"
