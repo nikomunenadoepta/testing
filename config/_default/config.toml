@@ -1,4 +1,4 @@
-baseurl = "https://eeeee.ru/"
+baseurl = "https://testing-guyj.onrender.com"
 canonifyURLs = false
 disableAliases = false
 disableHugoGeneratorInject = false
